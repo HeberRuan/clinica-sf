@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+  <title>Dra. Stefany Fanelli · Dermatologia</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600&family=Jost:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css" />
+  <style>
+    :root {
+      --rose: #C4856A; --rose-light: #E8C4B4; --rose-pale: #F5EDE8;
+      --gold: #C9A86C; --gold-light: #E8D5AF; --brown: #8B5E52;
+      --white: #FFFFFF; --cream: #FAF6F3; --text-dark: #5A3A2E;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { font-family: 'Jost', sans-serif; background: var(--cream); min-height: 100vh; -webkit-tap-highlight-color: transparent; }
+    .page { display: none; min-height: 100vh; }
+    .page.active { display: block; }
+
+    .menu-screen { padding: 48px 28px 56px; max-width: 760px; margin: 0 auto; }
+    .header { text-align: center; margin-bottom: 40px; padding-bottom: 28px; border-bottom: 0.5px solid var(--rose-light); position: relative; }
+    .header::after { content: ''; position: absolute; bottom: -1px; left: 50%; transform: translateX(-50%); width: 60px; height: 2px; background: var(--gold); }
+    .logo-area { display: flex; align-items: center; justify-content: center; gap: 16px; margin-bottom: 16px; }
+    .logo-monogram { width: 56px; height: 56px; border-radius: 50%; border: 1.5px solid var(--gold); display: flex; align-items: center; justify-content: center; background: var(--white); flex-shrink: 0; }
+    .logo-monogram span { font-family: 'Cormorant Garamond', serif; font-size: 22px; font-weight: 600; color: var(--rose); }
+    .logo-text h1 { font-family: 'Cormorant Garamond', serif; font-size: 26px; font-weight: 500; color: var(--rose); letter-spacing: 0.02em; text-align: left; line-height: 1.1; }
+    .logo-text p { font-size: 10px; letter-spacing: 0.22em; color: var(--gold); text-transform: uppercase; text-align: left; margin-top: 4px; }
+    .welcome-msg { font-size: 13px; font-weight: 300; color: var(--brown); letter-spacing: 0.04em; }
+    .section-label { font-size: 10px; font-weight: 500; letter-spacing: 0.25em; text-transform: uppercase; color: var(--gold); text-align: center; margin-bottom: 20px; }
+    .divider-ornament { display: flex; align-items: center; justify-content: center; gap: 12px; margin-bottom: 22px; }
+    .divider-ornament span { width: 40px; height: 0.5px; background: var(--gold-light); }
+    .divider-ornament i { font-size: 12px; color: var(--gold); }
+    .procedures-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 36px; }
+    @media (max-width: 480px) { .procedures-grid { grid-template-columns: 1fr; } }
+    .procedure-card { background: var(--white); border: 0.5px solid var(--rose-light); border-radius: 14px; padding: 18px 16px 22px; cursor: pointer; transition: all 0.25s ease; position: relative; overflow: hidden; display: flex; align-items: flex-start; gap: 12px; user-select: none; -webkit-user-select: none; }
+    .procedure-card::before { content: ''; position: absolute; top: 0; left: 0; width: 3px; height: 100%; background: linear-gradient(180deg, var(--gold) 0%, var(--rose) 100%); opacity: 0; transition: opacity 0.25s; }
+    .procedure-card:hover, .procedure-card:active { border-color: var(--rose); background: var(--rose-pale); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(196,133,106,0.12); }
+    .procedure-card:hover::before, .procedure-card:active::before { opacity: 1; }
+    .card-icon { width: 40px; height: 40px; border-radius: 10px; background: var(--rose-pale); border: 0.5px solid var(--rose-light); display: flex; align-items: center; justify-content: center; flex-shrink: 0; transition: background 0.25s; }
+    .procedure-card:hover .card-icon, .procedure-card:active .card-icon { background: var(--rose-light); }
+    .card-icon i { font-size: 18px; color: var(--rose); }
+    .card-content { flex: 1; padding-right: 8px; }
+    .card-title { font-family: 'Cormorant Garamond', serif; font-size: 16px; font-weight: 600; color: var(--text-dark); line-height: 1.2; margin-bottom: 4px; }
+    .card-sub { font-size: 11px; font-weight: 300; color: var(--brown); line-height: 1.4; }
+    .card-badge { position: absolute; top: 10px; right: 10px; font-size: 9px; font-weight: 500; letter-spacing: 0.08em; padding: 2px 8px; border-radius: 20px; }
+    .badge-video { background: #EAF3DE; color: #3B6D11; }
+    .badge-soon { background: var(--rose-pale); color: var(--brown); border: 0.5px solid var(--rose-light); }
+    .card-arrow { position: absolute; bottom: 12px; right: 14px; font-size: 14px; color: var(--gold); opacity: 0; transition: opacity 0.2s, transform 0.2s; }
+    .procedure-card:hover .card-arrow, .procedure-card:active .card-arrow { opacity: 1; transform: translateX(3px); }
+    .footer-note { text-align: center; padding-top: 20px; border-top: 0.5px solid var(--rose-light); }
+    .footer-note p { font-size: 12px; font-weight: 300; color: var(--brown); letter-spacing: 0.04em; line-height: 1.9; }
+    .footer-note .gold-line { color: var(--gold); font-weight: 400; }
+
+    .video-screen { padding: 40px 28px 48px; max-width: 760px; margin: 0 auto; }
+    .top-bar { display: flex; align-items: center; gap: 14px; margin-bottom: 28px; }
+    .back-btn { width: 40px; height: 40px; border-radius: 50%; border: 0.5px solid var(--rose-light); background: var(--white); display: flex; align-items: center; justify-content: center; cursor: pointer; transition: background 0.2s, transform 0.15s; flex-shrink: 0; }
+    .back-btn:hover { background: var(--rose-pale); transform: scale(1.05); }
+    .back-btn:active { transform: scale(0.96); }
+    .back-btn i { font-size: 18px; color: var(--rose); }
+    .top-info { flex: 1; }
+    .top-title { font-family: 'Cormorant Garamond', serif; font-size: 24px; font-weight: 600; color: var(--text-dark); line-height: 1.1; }
+    .top-sub { font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold); font-weight: 400; margin-top: 3px; }
+    .video-wrapper { width: 100%; border-radius: 18px; overflow: hidden; border: 0.5px solid var(--rose-light); background: #111; position: relative; padding-top: 56.25%; margin-bottom: 22px; box-shadow: 0 12px 40px rgba(196,133,106,0.15); }
+    .video-wrapper iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; }
+    .video-placeholder { position: absolute; top: 0; left: 0; right: 0; bottom: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; background: #1a1a1a; gap: 10px; cursor: pointer; }
+    .video-placeholder i { font-size: 36px; color: var(--rose-light); }
+    .video-placeholder p { font-size: 13px; color: var(--rose-light); font-weight: 300; letter-spacing: 0.06em; }
+    .info-card { background: var(--white); border: 0.5px solid var(--rose-light); border-radius: 14px; padding: 20px 22px; display: flex; align-items: flex-start; gap: 16px; margin-bottom: 16px; }
+    .info-icon { width: 44px; height: 44px; border-radius: 11px; background: var(--rose-pale); border: 0.5px solid var(--rose-light); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .info-icon i { font-size: 20px; color: var(--rose); }
+    .info-text h3 { font-family: 'Cormorant Garamond', serif; font-size: 18px; font-weight: 600; color: var(--text-dark); margin-bottom: 5px; }
+    .info-text p { font-size: 12px; font-weight: 300; color: var(--brown); line-height: 1.7; }
+    .video-footer { text-align: center; margin-top: 20px; font-size: 12px; font-weight: 300; color: var(--brown); letter-spacing: 0.05em; }
+    .video-footer span { color: var(--gold); font-weight: 400; }
+
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
+    .page.active .procedure-card { animation: fadeUp 0.4s ease both; }
+    .page.active .procedure-card:nth-child(1) { animation-delay: 0.05s; }
+    .page.active .procedure-card:nth-child(2) { animation-delay: 0.10s; }
+    .page.active .procedure-card:nth-child(3) { animation-delay: 0.15s; }
+    .page.active .procedure-card:nth-child(4) { animation-delay: 0.20s; }
+    .page.active .procedure-card:nth-child(5) { animation-delay: 0.25s; }
+    .page.active .procedure-card:nth-child(6) { animation-delay: 0.30s; }
+    .page.active .procedure-card:nth-child(7) { animation-delay: 0.35s; }
+    .page.active .procedure-card:nth-child(8) { animation-delay: 0.40s; }
+    .page.active .procedure-card:nth-child(9) { animation-delay: 0.45s; }
+    .page.active .procedure-card:nth-child(10){ animation-delay: 0.50s; }
+  </style>
+</head>
+<body>
+
+  <!-- MENU -->
+  <div id="page-menu" class="page active">
+    <div class="menu-screen">
+      <div class="header">
+        <div class="logo-area">
+          <div class="logo-monogram"><span>SF</span></div>
+          <div class="logo-text">
+            <h1>Dra. Stefany Fanelli</h1>
+            <p>Dermatologia</p>
+          </div>
+        </div>
+        <p class="welcome-msg">Conheça os procedimentos disponíveis em nossa clínica</p>
+      </div>
+
+      <p class="section-label">Procedimentos estéticos</p>
+      <div class="divider-ornament">
+        <span></span><i class="ti ti-sparkles" aria-hidden="true"></i><span></span>
+      </div>
+
+      <div class="procedures-grid">
+
+        <div class="procedure-card" onclick="openVideo('Botox','ti-needle','','','Aplicação precisa de toxina botulínica para suavizar rugas de expressão, como testa, entre sobrancelhas e pés de galinha. Resultado natural com duração de 4 a 6 meses.')">
+          <div class="card-icon"><i class="ti ti-needle" aria-hidden="true"></i></div>
+          <div class="card-content"><p class="card-title">Botox</p><p class="card-sub">Toxina botulínica para rugas de expressão</p></div>
+          <span class="card-badge badge-soon">Em breve</span>
+          <i class="ti ti-arrow-right card-arrow" aria-hidden="true"></i>
+        </div>
+
+        <div class="procedure-card" onclick="openVideo('Liftera','ti-wand','','','Tecnologia de ultrassom microfocado que estimula colágeno nas camadas profundas da pele, promovendo efeito lifting sem cirurgia. Resultado progressivo ao longo de 3 meses.')">
+          <div class="card-icon"><i class="ti ti-wand" aria-hidden="true"></i></div>
+          <div class="card-content"><p class="card-title">Liftera</p><p class="card-sub">Ultrassom microfocado para lifting facial</p></div>
+          <span class="card-badge badge-soon">Em breve</span>
+          <i class="ti ti-arrow-right card-arrow" aria-hidden="true"></i>
+        </div>
+
+        <div class="procedure-card" onclick="openVideo('LaserMe','ti-bolt','','','Laser fracionado que atua na renovação celular, tratando manchas, poros dilatados, cicatrizes e flacidez. Procedimento seguro com recuperação rápida.')">
+          <div class="card-icon"><i class="ti ti-bolt" aria-hidden="true"></i></div>
+          <div class="card-content"><p class="card-title">LaserMe</p><p class="card-sub">Laser fracionado para rejuvenescimento</p></div>
+          <span class="card-badge badge-soon">Em breve</span>
+          <i class="ti ti-arrow-right card-arrow" aria-hidden="true"></i>
+        </div>
+
+        <div class="procedure-card" onclick="openVideo('MesojectGun','ti-droplet','','','Aplicação de cocktails de vitaminas e ácido hialurônico através de injetor automático de alta precisão. Hidratação profunda e luminosidade imediata.')">
+          <div class="card-icon"><i class="ti ti-droplet" aria-hidden="true"></i></div>
+          <div class="card-content"><p class="card-title">MesojectGun</p><p class="card-sub">Mesoterapia com injetor automático</p></div>
+          <span class="card-badge badge-soon">Em breve</span>
+          <i class="ti ti-arrow-right card-arrow" aria-hidden="true"></i>
+        </div>
+
+        <div class="procedure-card" onclick="openVideo('Bioestimulador de Colágeno','ti-leaf','','','Substâncias bioestimuladores injetadas na pele que ativam a produção natural de colágeno. Melhora progressiva da firmeza e qualidade da pele ao longo de meses.')">
+          <div class="card-icon"><i class="ti ti-leaf" aria-hidden="true"></i></div>
+          <div class="card-content"><p class="card-title">Bioestimulador de Colágeno</p><p class="card-sub">Estimulação natural da firmeza da pele</p></div>
+          <span class="card-badge badge-soon">Em breve</span>
+          <i class="ti ti-arrow-right card-arrow" aria-hidden="true"></i>
+        </div>
+
+        <div class="procedure-card" onclick="openVideo('Harmonização Facial','ti-geometry','','','Conjunto de procedimentos minimamente invasivos para equilibrar proporções, suavizar assimetrias e realçar a beleza natural do rosto.')">
+          <div class="card-icon"><i class="ti ti-geometry" aria-hidden="true"></i></div>
+          <div class="card-content"><p class="card-title">Harmonização Facial</p><p class="card-sub">Equilíbrio e proporção das feições</p></div>
+          <span class="card-badge badge-soon">Em breve</span>
+          <i class="ti ti-arrow-right card-arrow" aria-hidden="true"></i>
+        </div>
+
+        <div class="procedure-card" onclick="openVideo('Preenchimento Labial','ti-heart','','','Aplicação de ácido hialurônico nos lábios para definir contorno, adicionar volume e suavizar linhas periorais. Resultado natural e reversível, com duração de 8 a 12 meses.')">
+          <div class="card-icon"><i class="ti ti-heart" aria-hidden="true"></i></div>
+          <div class="card-content"><p class="card-title">Preenchimento Labial</p><p class="card-sub">Ácido hialurônico para volume e contorno</p></div>
+          <span class="card-badge badge-soon">Em breve</span>
+          <i class="ti ti-arrow-right card-arrow" aria-hidden="true"></i>
+        </div>
+
+        <div class="procedure-card" onclick="openVideo('Remoção de Lesões','ti-circle-check','','','Remoção segura e precisa de lesões benignas da pele como verrugas, cistos sebáceos e fibromas, com mínimo desconforto e cicatrização rápida.')">
+          <div class="card-icon"><i class="ti ti-circle-check" aria-hidden="true"></i></div>
+          <div class="card-content"><p class="card-title">Remoção de Lesões</p><p class="card-sub">Verrugas, cistos e lesões cutâneas</p></div>
+          <span class="card-badge badge-soon">Em breve</span>
+          <i class="ti ti-arrow-right card-arrow" aria-hidden="true"></i>
+        </div>
+
+        <div class="procedure-card" onclick="openVideo('Fios de PDO','ti-line','drive','1O_gQF-g2p591dCVaOZ7u3tcPA-kaLT94','Fios absorvíveis de polidioxanona utilizados para sustentação, reposicionamento facial e estímulo natural de colágeno. Resultado gradual com duração de 12 a 18 meses.')">
+          <div class="card-icon"><i class="ti ti-line" aria-hidden="true"></i></div>
+          <div class="card-content"><p class="card-title">Fios de PDO</p><p class="card-sub">Sustentação e reposicionamento facial</p></div>
+          <span class="card-badge badge-video">▶ Vídeo</span>
+          <i class="ti ti-arrow-right card-arrow" aria-hidden="true"></i>
+        </div>
+
+        <div class="procedure-card" onclick="openVideo('Fios Aptos','ti-arrows-up','','','Fios com cones ou farpas bidirecionais que promovem lifting imediato e ancoragem firme nos tecidos. Resultado visível logo após o procedimento, com duração de 18 a 24 meses.')">
+          <div class="card-icon"><i class="ti ti-arrows-up" aria-hidden="true"></i></div>
+          <div class="card-content"><p class="card-title">Fios Aptos</p><p class="card-sub">Fios absorvíveis para lifting imediato</p></div>
+          <span class="card-badge badge-soon">Em breve</span>
+          <i class="ti ti-arrow-right card-arrow" aria-hidden="true"></i>
+        </div>
+
+      </div>
+
+      <div class="footer-note">
+        <p>Toque em um procedimento para assistir ao vídeo explicativo<br>
+        <span class="gold-line">A Dra. Stefany estará disponível para esclarecer todas as suas dúvidas</span></p>
+      </div>
+    </div>
+  </div>
+
+  <!-- VIDEO PAGE -->
+  <div id="page-video" class="page">
+    <div class="video-screen">
+      <div class="top-bar">
+        <div class="back-btn" onclick="goBack()">
+          <i class="ti ti-arrow-left" aria-hidden="true"></i>
+        </div>
+        <div class="top-info">
+          <p class="top-title" id="video-title">—</p>
+          <p class="top-sub">Dra. Stefany Fanelli · Dermatologia</p>
+        </div>
+      </div>
+
+      <div class="video-wrapper" id="video-wrapper"></div>
+
+      <div class="info-card">
+        <div class="info-icon"><i id="video-icon" class="ti ti-needle" aria-hidden="true"></i></div>
+        <div class="info-text">
+          <h3 id="video-info-title">—</h3>
+          <p id="video-desc">—</p>
+        </div>
+      </div>
+
+      <p class="video-footer">Dúvidas? <span>A Dra. Stefany responderá durante sua consulta.</span></p>
+    </div>
+  </div>
+
+  <script>
+    function openVideo(name, icon, type, videoId, desc) {
+      document.getElementById('video-title').textContent = name;
+      document.getElementById('video-info-title').textContent = name;
+      document.getElementById('video-desc').textContent = desc;
+      document.getElementById('video-icon').className = 'ti ' + icon;
+
+      var wrapper = document.getElementById('video-wrapper');
+
+      if (type === 'drive' && videoId) {
+        wrapper.innerHTML = '<iframe src="https://drive.google.com/file/d/' + videoId + '/preview" allowfullscreen allow="autoplay"></iframe>';
+      } else if (type === 'youtube' && videoId) {
+        wrapper.innerHTML =
+          '<div class="video-placeholder" onclick="window.open(\'https://www.youtube.com/watch?v=' + videoId + '\',\'_blank\')">' +
+          '<div style="width:72px;height:72px;border-radius:50%;background:var(--rose);display:flex;align-items:center;justify-content:center;margin-bottom:12px;">' +
+          '<i class="ti ti-player-play" style="font-size:32px;color:#fff;margin-left:4px;"></i></div>' +
+          '<p style="font-size:14px;color:#fff;font-weight:400;letter-spacing:0.06em;">Toque para assistir no YouTube</p>' +
+          '</div>';
+      } else {
+        wrapper.innerHTML =
+          '<div class="video-placeholder">' +
+          '<i class="ti ti-video-off"></i>' +
+          '<p>Vídeo em breve</p>' +
+          '</div>';
+      }
+
+      document.getElementById('page-menu').classList.remove('active');
+      document.getElementById('page-video').classList.add('active');
+      window.scrollTo(0, 0);
+    }
+
+    function goBack() {
+      document.getElementById('page-video').classList.remove('active');
+      document.getElementById('page-menu').classList.add('active');
+      document.getElementById('video-wrapper').innerHTML = '';
+      window.scrollTo(0, 0);
+    }
+  </script>
+
+</body>
+</html>
